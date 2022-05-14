@@ -14,6 +14,7 @@ import com.graphhopper.ResponsePath;
 
 import org.json.*;
 
+import java.util.Arrays;
 import java.util.Objects;
 
 public class MessageListener implements IMqttMessageListener{
@@ -43,12 +44,26 @@ public class MessageListener implements IMqttMessageListener{
     }
 
     private void routeRequest(MqttMessage mqttMessage) throws MqttException {
-        JSONObject message = new JSONObject(mqttMessage.getPayload());
-        String uuid = message.getString("uuid");
-        double fromLat = message.getJSONObject("from").getDouble("lat");
-        double fromLon = message.getJSONObject("from").getDouble("lon");
-        double toLat = message.getJSONObject("to").getDouble("lat");
-        double toLon = message.getJSONObject("to").getDouble("lon");
+        JSONObject message = new JSONObject(Arrays.toString(mqttMessage.getPayload()));
+        System.out.println(Arrays.toString(mqttMessage.getPayload()));
+        double fromLat, fromLon, toLat, toLon;
+        String uuid;
+        try {
+            uuid = message.getString("uuid");
+            fromLat = message.getJSONObject("from").getDouble("lat");
+            fromLon = message.getJSONObject("from").getDouble("lon");
+            toLat = message.getJSONObject("to").getDouble("lat");
+            toLon = message.getJSONObject("to").getDouble("lon");
+        }
+        catch (Exception ee){
+            System.err.println("Messages malformed!");
+            ee.printStackTrace(System.err);
+            return;
+        }
+
+        System.out.println("Got new Request:");
+        System.out.println("From: " + fromLat + ", " + fromLon);
+        System.out.println("to: " + toLat + ", " + toLon);
 
         PointList route = routing(fromLat, fromLon, toLat, toLon);
 
@@ -63,6 +78,7 @@ public class MessageListener implements IMqttMessageListener{
             jsa.put(jso);
         }
 
+        System.out.println("Response send to: " + Entry.mqttResponseTopic + "/" + uuid);
         response.put("route", jsa);
 
         MqttMessage responseMessage = new MqttMessage(response.toString().getBytes());
