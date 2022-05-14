@@ -17,7 +17,7 @@ import org.eclipse.paho.client.mqttv3.persist.MemoryPersistence;
 public class Entry {
     private final static String mapDir = "/maps/";
     private final static String mapName = "hamburg-latest.osm.pbf";
-    private final static String mqttHost = "mqtt.local";
+    private final static String mqttHost = "mqttbroker";
     public final static String mqttRequestTopic = "/routinator/request";
     public final static String mqttResponseTopic = "/routinator/response";
     public final static String mqttControlTopic = "/routinator/control";
@@ -27,9 +27,10 @@ public class Entry {
     public static void main(String[] args) {
         String mapPath = mapDir + mapName;
         GraphHopper hopper = createGraphHopperInstance(mapPath);
-
+        System.out.println("Loaded Graphhopper Instance");
         while(running) {
             try {
+                System.out.println("Starting mqttclient");
                 runMqttClient(hopper);
             } catch (Exception ee) {
                 System.err.println("MQTT throwed");
@@ -52,6 +53,8 @@ public class Entry {
 
 
     static void runMqttClient(GraphHopper hopper) throws Exception {
+        System.out.println("Waiting 10 seconds until server is up");
+        Thread.sleep(10000);
         String broker       = "tcp://" + mqttHost + ":1883";
         String clientId     = "Routinator";
         MemoryPersistence persistence = new MemoryPersistence();

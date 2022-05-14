@@ -4,7 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="9e3c0400-9665-4063-96f8-243bce3c8846" name="Changes" comment="Added bundled jar plugin">
+    <list default="true" id="9e3c0400-9665-4063-96f8-243bce3c8846" name="Changes" comment="added mqtt connect retry">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/de/haw/cps22rs/Entry.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/de/haw/cps22rs/Entry.java" afterDir="false" />
     </list>
@@ -82,7 +82,7 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1652298452836</updated>
-      <workItem from="1652298454020" duration="13198000" />
+      <workItem from="1652298454020" duration="13586000" />
     </task>
     <task id="LOCAL-00001" summary="Initial Commit - Added all essential files and functionailty">
       <created>1652309891808</created>
@@ -112,7 +112,14 @@
       <option name="project" value="LOCAL" />
       <updated>1652311454881</updated>
     </task>
-    <option name="localTasksCounter" value="5" />
+    <task id="LOCAL-00005" summary="added mqtt connect retry">
+      <created>1652560596486</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1652560596486</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -134,6 +141,7 @@
     <MESSAGE value="Removed maven docker executions" />
     <MESSAGE value="Added jar entry class" />
     <MESSAGE value="Added bundled jar plugin" />
-    <option name="LAST_COMMIT_MESSAGE" value="Added bundled jar plugin" />
+    <MESSAGE value="added mqtt connect retry" />
+    <option name="LAST_COMMIT_MESSAGE" value="added mqtt connect retry" />
   </component>
 </project>
