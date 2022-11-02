@@ -28,6 +28,7 @@ public class Entry {
 
     public static void main(String[] args) {
         mqttPrefix = System.getenv("ROUTINATOR_PREFIX");
+        System.out.println("MQTT Prefix set to: " + mqttPrefix);
 
         String mapPath = mapDir + mapName;
         GraphHopper hopper = createGraphHopperInstance(mapPath);
