@@ -91,7 +91,7 @@ public class MessageListener implements IMqttMessageListener{
 
     @Override
     public void messageArrived(String topic, MqttMessage mqttMessage) throws Exception {
-        if(Objects.equals(topic, Entry.mqttRequestTopic)){
+        if(Objects.equals(topic, Entry.mqttPrefix + Entry.mqttRequestTopic)){
             routeRequest(mqttMessage);
         }
     }
