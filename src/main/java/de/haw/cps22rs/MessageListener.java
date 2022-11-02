@@ -78,12 +78,14 @@ public class MessageListener implements IMqttMessageListener{
             jsa.put(jso);
         }
 
-        System.out.println("Response send to: " + Entry.mqttPrefix + Entry.mqttResponseTopic + "/" + uuid);
+        String topic = Entry.mqttPrefix + Entry.mqttResponseTopic + "/by-uuid/" + uuid;
+
+        System.out.println("Response send to: " + topic);
         response.put("route", jsa);
 
         MqttMessage responseMessage = new MqttMessage(response.toString().getBytes());
 
-        _client.publish(Entry.mqttPrefix + Entry.mqttResponseTopic + "/" + uuid, responseMessage);
+        _client.publish(topic, responseMessage);
 
     }
 

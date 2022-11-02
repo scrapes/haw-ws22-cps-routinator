@@ -18,9 +18,9 @@ public class Entry {
     private final static String mapDir = "/maps/";
     private final static String mapName = "hamburg-latest.osm.pbf";
     private final static String mqttHost = "mqttbroker";
-    public final static String mqttRequestTopic = "/routinator/request";
-    public final static String mqttResponseTopic = "/routinator/response";
-    public final static String mqttControlTopic = "/routinator/control";
+    public final static String mqttRequestTopic = "/request";
+    public final static String mqttResponseTopic = "/response";
+    public final static String mqttControlTopic = "/control";
 
     public static String mqttPrefix = "";
 
