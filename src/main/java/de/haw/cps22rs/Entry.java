@@ -22,9 +22,13 @@ public class Entry {
     public final static String mqttResponseTopic = "/routinator/response";
     public final static String mqttControlTopic = "/routinator/control";
 
+    public static String mqttPrefix = "";
+
     public static Boolean running = true;
 
     public static void main(String[] args) {
+        mqttPrefix = System.getenv("ROUTINATOR_PREFIX");
+
         String mapPath = mapDir + mapName;
         GraphHopper hopper = createGraphHopperInstance(mapPath);
         System.out.println("Loaded Graphhopper Instance");
@@ -69,7 +73,7 @@ public class Entry {
         mclient.connect(connOpts);
         System.out.println("Connected");
 
-        mclient.subscribe(mqttRequestTopic, mListener);
+        mclient.subscribe(mqttPrefix + mqttRequestTopic, mListener);
 
         //noinspection StatementWithEmptyBody
         while (mclient.isConnected()) ;
