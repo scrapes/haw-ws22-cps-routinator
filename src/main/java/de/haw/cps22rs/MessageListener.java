@@ -44,8 +44,8 @@ public class MessageListener implements IMqttMessageListener{
     }
 
     private void routeRequest(MqttMessage mqttMessage) throws MqttException {
-        JSONObject message = new JSONObject(Arrays.toString(mqttMessage.getPayload()));
-        System.out.println(Arrays.toString(mqttMessage.getPayload()));
+        JSONObject message = new JSONObject(mqttMessage.toString());
+        System.out.println(mqttMessage);
         double fromLat, fromLon, toLat, toLon;
         String uuid;
         try {
