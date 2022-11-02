@@ -1,5 +1,6 @@
 package de.haw.cps22rs;
 
+import com.google.gson.Gson;
 import org.eclipse.paho.client.mqttv3.IMqttMessageListener;
 import org.eclipse.paho.client.mqttv3.MqttClient;
 import org.eclipse.paho.client.mqttv3.MqttException;
@@ -15,15 +16,54 @@ import com.graphhopper.ResponsePath;
 import org.json.*;
 
 import java.util.Arrays;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Objects;
+import java.util.stream.Collectors;
+import java.util.stream.StreamSupport;
+
+class Coordinate {
+    double Latitude;
+    double Longitude;
+
+    public Coordinate(double Lat, double Lon){
+        Latitude = Lat;
+        Longitude = Lon;
+    }
+
+    public Coordinate(GHPoint3D point){
+        Latitude = point.lat;
+        Longitude = point.lon;
+    }
+}
+
+class RequestMessage {
+    String UUID;
+    Coordinate From;
+    Coordinate To;
+}
+
+class ResponseMessage {
+    String UUID;
+    Coordinate[] Route;
+
+    public ResponseMessage(String uuid, List<Coordinate> route){
+        UUID = uuid;
+        Route = new Coordinate[route.size()];
+        Route = route.toArray(Route);
+    }
+}
 
 public class MessageListener implements IMqttMessageListener{
+    
     private final GraphHopper _hopper;
     private final MqttClient _client;
 
-    private PointList routing(double fromLat, double fromLon, double toLat, double toLon) {
+    private final Gson gson = new Gson();
+
+    private List<Coordinate> routing(Coordinate from, Coordinate to) {
         // simple configuration of the request object
-        GHRequest req = new GHRequest(fromLat, fromLon, toLat, toLon).
+        GHRequest req = new GHRequest(from.Latitude, from.Longitude, to.Latitude, to.Longitude).
                 // note that we have to specify which profile we are using even when there is only one like here
                         setProfile("car");
         GHResponse rsp = _hopper.route(req);
@@ -34,7 +74,8 @@ public class MessageListener implements IMqttMessageListener{
 
         // use the best path, see the GHResponse class for more possibilities.
         ResponsePath path = rsp.getBest();
-        return path.getPoints();
+        PointList route = path.getPoints();
+        return StreamSupport.stream(route.spliterator(), true).map(Coordinate::new).collect(Collectors.toList());
     }
 
 
@@ -44,16 +85,10 @@ public class MessageListener implements IMqttMessageListener{
     }
 
     private void routeRequest(MqttMessage mqttMessage) throws MqttException {
-        JSONObject message = new JSONObject(mqttMessage.toString());
+        RequestMessage message;
         System.out.println(mqttMessage);
-        double fromLat, fromLon, toLat, toLon;
-        String uuid;
         try {
-            uuid = message.getString("UUID");
-            fromLat = message.getJSONObject("From").getDouble("Lat");
-            fromLon = message.getJSONObject("From").getDouble("Lon");
-            toLat = message.getJSONObject("To").getDouble("Lat");
-            toLon = message.getJSONObject("To").getDouble("Lon");
+            message = gson.fromJson(mqttMessage.toString(), RequestMessage.class);
         }
         catch (Exception ee){
             System.err.println("Messages malformed!");
@@ -62,30 +97,22 @@ public class MessageListener implements IMqttMessageListener{
         }
 
         System.out.println("Got new Request:");
-        System.out.println("From: " + fromLat + ", " + fromLon);
-        System.out.println("to: " + toLat + ", " + toLon);
+        System.out.println("From: " + message.From.Latitude + ", " + message.From.Longitude);
+        System.out.println("to: " + message.To.Latitude + ", " + message.From.Longitude);
 
-        PointList route = routing(fromLat, fromLon, toLat, toLon);
+        List<Coordinate> route = routing(message.From, message.To);
 
-        JSONObject response = new JSONObject();
-        response.put("UUID", uuid);
-        JSONArray jsa = new JSONArray();
+        ResponseMessage responseMessage = new ResponseMessage(message.UUID, route);
 
-        for(GHPoint3D point : route){
-            JSONObject jso = new JSONObject();
-            jso.put("Lat", point.lat);
-            jso.put("Lon", point.lon);
-            jsa.put(jso);
-        }
 
-        String topic = Entry.mqttPrefix + Entry.mqttResponseTopic + "/by-uuid/" + uuid;
+
+        String topic = Entry.mqttPrefix + Entry.mqttResponseTopic + "/by-uuid/" + message.UUID;
 
         System.out.println("Response send to: " + topic);
-        response.put("route", jsa);
 
-        MqttMessage responseMessage = new MqttMessage(response.toString().getBytes());
+        MqttMessage mqttResponse = new MqttMessage(gson.toJson(responseMessage).getBytes());
 
-        _client.publish(topic, responseMessage);
+        _client.publish(topic, mqttResponse);
 
     }
 

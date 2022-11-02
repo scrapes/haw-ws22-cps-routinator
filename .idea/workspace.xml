@@ -4,8 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="9e3c0400-9665-4063-96f8-243bce3c8846" name="Changes" comment="fixed mqtt subscription">
+    <list default="true" id="9e3c0400-9665-4063-96f8-243bce3c8846" name="Changes" comment="added gson and reworked json parsing">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/de/haw/cps22rs/MessageListener.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/de/haw/cps22rs/MessageListener.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -83,7 +84,7 @@
       <option name="presentableId" value="Default" />
       <updated>1652298452836</updated>
       <workItem from="1652298454020" duration="14990000" />
-      <workItem from="1667403055957" duration="2125000" />
+      <workItem from="1667403055957" duration="3705000" />
     </task>
     <task id="LOCAL-00001" summary="Initial Commit - Added all essential files and functionailty">
       <created>1652309891808</created>
@@ -176,7 +177,14 @@
       <option name="project" value="LOCAL" />
       <updated>1667405001565</updated>
     </task>
-    <option name="localTasksCounter" value="14" />
+    <task id="LOCAL-00014" summary="fixed golang JSON compabilty">
+      <created>1667405200791</created>
+      <option name="number" value="00014" />
+      <option name="presentableId" value="LOCAL-00014" />
+      <option name="project" value="LOCAL" />
+      <updated>1667405200791</updated>
+    </task>
+    <option name="localTasksCounter" value="15" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -204,6 +212,8 @@
     <MESSAGE value="added mqtt prefix by environment variable" />
     <MESSAGE value="fixed logging" />
     <MESSAGE value="fixed mqtt subscription" />
-    <option name="LAST_COMMIT_MESSAGE" value="fixed mqtt subscription" />
+    <MESSAGE value="fixed golang JSON compabilty" />
+    <MESSAGE value="added gson and reworked json parsing" />
+    <option name="LAST_COMMIT_MESSAGE" value="added gson and reworked json parsing" />
   </component>
 </project>
