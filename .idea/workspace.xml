@@ -4,7 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="9e3c0400-9665-4063-96f8-243bce3c8846" name="Changes" comment="fixed logging">
+    <list default="true" id="9e3c0400-9665-4063-96f8-243bce3c8846" name="Changes" comment="fixed mqtt subscription">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/de/haw/cps22rs/MessageListener.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/de/haw/cps22rs/MessageListener.java" afterDir="false" />
     </list>
@@ -83,7 +83,7 @@
       <option name="presentableId" value="Default" />
       <updated>1652298452836</updated>
       <workItem from="1652298454020" duration="14990000" />
-      <workItem from="1667403055957" duration="1920000" />
+      <workItem from="1667403055957" duration="2125000" />
     </task>
     <task id="LOCAL-00001" summary="Initial Commit - Added all essential files and functionailty">
       <created>1652309891808</created>
@@ -169,7 +169,14 @@
       <option name="project" value="LOCAL" />
       <updated>1667404513853</updated>
     </task>
-    <option name="localTasksCounter" value="13" />
+    <task id="LOCAL-00013" summary="fixed mqtt subscription">
+      <created>1667405001565</created>
+      <option name="number" value="00013" />
+      <option name="presentableId" value="LOCAL-00013" />
+      <option name="project" value="LOCAL" />
+      <updated>1667405001565</updated>
+    </task>
+    <option name="localTasksCounter" value="14" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -196,6 +203,7 @@
     <MESSAGE value="further added more debug messages" />
     <MESSAGE value="added mqtt prefix by environment variable" />
     <MESSAGE value="fixed logging" />
-    <option name="LAST_COMMIT_MESSAGE" value="fixed logging" />
+    <MESSAGE value="fixed mqtt subscription" />
+    <option name="LAST_COMMIT_MESSAGE" value="fixed mqtt subscription" />
   </component>
 </project>

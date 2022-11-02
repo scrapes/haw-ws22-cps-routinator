@@ -49,11 +49,11 @@ public class MessageListener implements IMqttMessageListener{
         double fromLat, fromLon, toLat, toLon;
         String uuid;
         try {
-            uuid = message.getString("uuid");
-            fromLat = message.getJSONObject("from").getDouble("lat");
-            fromLon = message.getJSONObject("from").getDouble("lon");
-            toLat = message.getJSONObject("to").getDouble("lat");
-            toLon = message.getJSONObject("to").getDouble("lon");
+            uuid = message.getString("UUID");
+            fromLat = message.getJSONObject("From").getDouble("Lat");
+            fromLon = message.getJSONObject("From").getDouble("Lon");
+            toLat = message.getJSONObject("To").getDouble("Lat");
+            toLon = message.getJSONObject("To").getDouble("Lon");
         }
         catch (Exception ee){
             System.err.println("Messages malformed!");
@@ -68,13 +68,13 @@ public class MessageListener implements IMqttMessageListener{
         PointList route = routing(fromLat, fromLon, toLat, toLon);
 
         JSONObject response = new JSONObject();
-        response.put("uuid", uuid);
+        response.put("UUID", uuid);
         JSONArray jsa = new JSONArray();
 
         for(GHPoint3D point : route){
             JSONObject jso = new JSONObject();
-            jso.put("lat", point.lat);
-            jso.put("lon", point.lon);
+            jso.put("Lat", point.lat);
+            jso.put("Lon", point.lon);
             jsa.put(jso);
         }
 
