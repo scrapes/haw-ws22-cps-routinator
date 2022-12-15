@@ -55,7 +55,7 @@ class ResponseMessage {
 }
 
 public class MessageListener implements IMqttMessageListener{
-    
+
     private final GraphHopper _hopper;
     private final MqttClient _client;
 
@@ -112,7 +112,7 @@ public class MessageListener implements IMqttMessageListener{
 
         MqttMessage mqttResponse = new MqttMessage(gson.toJson(responseMessage).getBytes());
 
-        _client.publish(topic, mqttResponse);
+        _client.publish(topic, mqttResponse.getPayload(),2, false);
 
     }
 

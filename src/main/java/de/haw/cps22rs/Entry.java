@@ -15,7 +15,6 @@ import org.eclipse.paho.client.mqttv3.MqttMessage;
 import org.eclipse.paho.client.mqttv3.persist.MemoryPersistence;
 
 public class Entry {
-    private final static String mapDir = "/maps/";
     private final static String mapName = "hamburg-latest.osm.pbf";
     private final static String mqttHost = "mqttbroker";
     public final static String mqttRequestTopic = "/request";
@@ -28,6 +27,7 @@ public class Entry {
 
     public static void main(String[] args) {
         mqttPrefix = System.getenv("ROUTINATOR_PREFIX");
+        String mapDir = System.getenv("ROUTINATOR_PREFIX");
         System.out.println("MQTT Prefix set to: " + mqttPrefix);
 
         String mapPath = mapDir + mapName;
@@ -74,7 +74,7 @@ public class Entry {
         mclient.connect(connOpts);
         System.out.println("Connected");
 
-        mclient.subscribe(mqttPrefix + mqttRequestTopic, mListener);
+        mclient.subscribe(mqttPrefix + mqttRequestTopic, 2, mListener);
 
         //noinspection StatementWithEmptyBody
         while (mclient.isConnected()) ;
