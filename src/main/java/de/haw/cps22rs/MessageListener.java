@@ -22,38 +22,6 @@ import java.util.Objects;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
-class Coordinate {
-    double Latitude;
-    double Longitude;
-
-    public Coordinate(double Lat, double Lon){
-        Latitude = Lat;
-        Longitude = Lon;
-    }
-
-    public Coordinate(GHPoint3D point){
-        Latitude = point.lat;
-        Longitude = point.lon;
-    }
-}
-
-class RequestMessage {
-    String UUID;
-    Coordinate From;
-    Coordinate To;
-}
-
-class ResponseMessage {
-    String UUID;
-    Coordinate[] Route;
-
-    public ResponseMessage(String uuid, List<Coordinate> route){
-        UUID = uuid;
-        Route = new Coordinate[route.size()];
-        Route = route.toArray(Route);
-    }
-}
-
 public class MessageListener implements IMqttMessageListener{
 
     private final GraphHopper _hopper;

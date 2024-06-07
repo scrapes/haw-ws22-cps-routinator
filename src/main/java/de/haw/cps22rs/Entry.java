@@ -16,7 +16,7 @@ import org.eclipse.paho.client.mqttv3.persist.MemoryPersistence;
 
 public class Entry {
     private final static String mapName = "hamburg-latest.osm.pbf";
-    private final static String mqttHost = "mqttbroker";
+    private final static String mqttHost = "k3s.anwski.de";
     public final static String mqttRequestTopic = "/request";
     public final static String mqttResponseTopic = "/response";
     public final static String mqttControlTopic = "/control";
@@ -40,7 +40,7 @@ public class Entry {
                 ee.printStackTrace(System.err);
             }
 
-            //Wait 5 seconds to reconect
+            //Wait 5 seconds to reconnect
             try {
                 //noinspection BusyWait
                 Thread.sleep(5000);
@@ -74,8 +74,10 @@ public class Entry {
 
         mclient.subscribe(mqttPrefix + mqttRequestTopic, 2, mListener);
 
-        //noinspection StatementWithEmptyBody
-        while (mclient.isConnected()) ;
+        while (mclient.isConnected()) {
+            // busy wait, because the mqtt thread is not owned by the main thread
+            Thread.sleep(1000);
+        }
 
         mclient.close();
     }
